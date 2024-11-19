@@ -23,10 +23,6 @@ public class Main {
         if (selectedFile == JFileChooser.APPROVE_OPTION) {
             File literatureFile = chooser.getSelectedFile();
             Map<String, Integer> keywordCounter = count(literatureFile, stopWords);
-
-            //System.out.println("Keywords: ");
-            //for (Map.Entry<String, Integer> entry : keywordCounter.entrySet()) {
-                //System.out.println(entry.getKey() + ": " + entry.getValue());
             tagExtractorFile(keywordCounter, "keywords.txt");
             }
         }
@@ -57,7 +53,7 @@ public class Main {
 
         try (BufferedReader reader = new BufferedReader(new FileReader(literatureFile))) {
             String line;
-            Pattern pattern = Pattern.compile("[a-zA-Z]+"); // Regex to match only words (letters only)
+            Pattern pattern = Pattern.compile("[a-zA-Z]+");
 
             while ((line = reader.readLine()) != null) {
                 Matcher matcher = pattern.matcher(line.toLowerCase());
