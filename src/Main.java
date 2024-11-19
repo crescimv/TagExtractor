@@ -24,12 +24,13 @@ public class Main {
             File literatureFile = chooser.getSelectedFile();
             Map<String, Integer> keywordCounter = count(literatureFile, stopWords);
 
-            System.out.println("Keywords: ");
-            for (Map.Entry<String, Integer> entry : keywordCounter.entrySet()) {
-                System.out.println(entry.getKey() + ": " + entry.getValue());
+            //System.out.println("Keywords: ");
+            //for (Map.Entry<String, Integer> entry : keywordCounter.entrySet()) {
+                //System.out.println(entry.getKey() + ": " + entry.getValue());
+            tagExtractorFile(keywordCounter, "keywords.txt");
             }
         }
-    }
+
     private static Set<String> stopWordsLoader() {
         return new HashSet<>();
     }
@@ -73,5 +74,18 @@ public class Main {
             e.printStackTrace();
         }
         return keyWordCounter;
+    }
+
+    private static void tagExtractorFile(Map<String, Integer> keywordCounter, String outputFile) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile))) {
+            writer.write("Keyword counts:\n");
+            for (Map.Entry<String, Integer> entry : keywordCounter.entrySet()) {
+                writer.write(entry.getKey() + ": " + entry.getValue() + "\n");
+            }
+            System.out.println("Output written to " + outputFile);
+        } catch (IOException e) {
+            System.err.println("Error writing to output file: " + outputFile);
+            e.printStackTrace();
+        }
     }
 }
